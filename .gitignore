@@ -30,3 +30,6 @@ logs/
 .env
 .env.local
 .env.*.local
+
+# typescript build info
+*.tsbuildinfo
