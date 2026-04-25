@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useReducer } from 'react'
 import styles from './Calculator.module.css'
 
-type Operator = '+' | '-' | '*' | '/'
+export type Operator = '+' | '-' | '*' | '/'
 
-interface State {
+export interface State {
   current: string
   stored: number | null
   pendingOp: Operator | null
@@ -156,8 +156,18 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-export default function Calculator() {
-  const [state, dispatch] = useReducer(reducer, initialState)
+interface Props {
+  initialState?: State | null
+  onStateChange?: (state: State) => void
+}
+
+export default function Calculator({ initialState: externalInitial, onStateChange }: Props = {}) {
+  const [state, dispatch] = useReducer(reducer, externalInitial ?? initialState)
+
+  // Передаём актуальное состояние наружу — родитель решит, сохранять или нет.
+  useEffect(() => {
+    onStateChange?.(state)
+  }, [state, onStateChange])
 
   const isOpActive = useCallback(
     (op: Operator) => state.pendingOp === op && state.waitingForOperand,
