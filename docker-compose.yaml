@@ -16,8 +16,9 @@ services:
     restart: unless-stopped
     environment:
       # Coolify magic var: маршрутизировать сгенерированный FQDN на сервис web, порт 3000.
-      # Без этого Traefik не знает, куда проксировать → Bad Gateway.
-      - SERVICE_FQDN_WEB_3000
+      # Map-форма со значением '/' — единственный формат, который принимают
+      # и docker compose в strict-режиме, и парсер Coolify (см. их официальные templates).
+      SERVICE_FQDN_WEB_3000: '/'
     # expose, а не ports — Coolify проксирует трафик через свою сеть,
     # порт наружу публиковать не нужно (и не безопасно).
     expose:
