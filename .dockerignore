@@ -1,0 +1,44 @@
+# Зависимости и артефакты сборки — ставятся/собираются внутри образа
+node_modules
+dist
+dist-ssr
+
+# Git и метаданные
+.git
+.gitignore
+.gitattributes
+
+# Редакторы
+.vscode
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Логи
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs
+*.log
+
+# Локальные env-файлы (секреты задаются через Coolify UI)
+.env.local
+.env.*.local
+*.local
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Документация и Claude
+README.md
+.claude
+
+# Сам Docker-контекст
+Dockerfile
+.dockerignore
