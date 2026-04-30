@@ -1,0 +1,20 @@
+# Compose-файл для деплоя в Coolify (Build Pack: Docker Compose).
+# Coolify сам управляет reverse proxy (Traefik) и SSL — НЕ добавляй labels вручную,
+# НЕ публикуй ports наружу (используем expose, чтобы Coolify сам подхватил порт).
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # Build-time переменные Vite пробрасываются в Dockerfile как ARG.
+      # Значения берутся из Environment Variables в Coolify UI
+      # (галочка "Available at Buildtime" обязательна).
+      args:
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+    restart: unless-stopped
+    # expose, а не ports — Coolify проксирует трафик через свою сеть,
+    # порт наружу публиковать не нужно (и не безопасно).
+    expose:
+      - "3000"
